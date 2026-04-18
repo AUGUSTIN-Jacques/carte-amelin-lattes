@@ -18,6 +18,8 @@
         --muted: #645a52;
         --accent: #b6542b;
         --border: rgba(31, 26, 23, 0.14);
+        --locate: #2a5db0;
+        --locate-dark: #1f4b91;
       }
 
       * {
@@ -141,6 +143,37 @@
         font-weight: 700;
       }
 
+      .locate-control button {
+        min-width: 118px;
+        padding: 10px 12px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--locate);
+        color: #fff;
+        box-shadow: 0 8px 20px rgba(25, 41, 70, 0.18);
+        font: 700 0.92rem/1.1 Georgia, "Times New Roman", serif;
+        cursor: pointer;
+      }
+
+      .locate-control button:hover {
+        background: var(--locate-dark);
+      }
+
+      .locate-control button.is-active {
+        background: #256f5a;
+      }
+
+      .location-status {
+        margin-top: 10px;
+        padding: 8px 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.35;
+        box-shadow: 0 8px 20px rgba(25, 41, 70, 0.12);
+      }
+
       @media (max-width: 860px) {
         .layout {
           grid-template-columns: 1fr;
@@ -158,101 +191,62 @@
     </style>
   </head>
   <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar-content">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-content">
+          <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em; color: #a65c3a;">
+            Promenade historique
+          </p>
 
-        <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em; color: #a65c3a;">
-          Promenade historique
-        </p>
+          <h1 style="margin-top: 0;">
+            Remontez le temps… ici même.
+          </h1>
 
-        <h1 style="margin-top: 0;">
-          Remontez le temps… ici même.
-        </h1>
+          <p>
+            Au XIXe siècle, Jean-Marie Amelin a posé son regard sur ces paysages aujourd’hui transformés.
+          </p>
 
-        <p>
-          Au XIXe siècle, Jean-Marie Amelin a posé son regard sur ces paysages aujourd’hui transformés.
-        </p>
+          <p>
+            Cette carte vous permet de retrouver, presque pas à pas, les lieux exacts où il a installé son chevalet.
+          </p>
 
-        <p>
-          Cette carte vous permet de retrouver, presque pas à pas, les lieux exacts où il a installé son chevalet.
-        </p>
+          <p>
+            👉 Cliquez sur un point pour découvrir le dessin original<br />
+            et comparez le passé avec le paysage actuel.
+          </p>
 
-        <p>
-          👉 Cliquez sur un point pour découvrir le dessin original<br>
-          et comparez le passé avec le paysage actuel.
-        </p>
+          <hr style="margin: 20px 0;" />
 
-        <hr style="margin: 20px 0;">
+          <p style="font-size: 0.95em; color: #555;">
+            Projet pilote — <strong>cetaitici.fr</strong><br />
+            <em>"C’était ici". L’histoire, là où elle s’est passée.</em>
+          </p>
 
-        <p style="font-size: 0.95em; color: #555;">
-          Projet pilote — <strong>cetaitici.fr</strong><br>
-          <em>"C’était ici". L’histoire, là où elle s’est passée.</em>
-        </p>
+          <div style="background:#f5f3f0; padding:12px; border-radius:8px; margin-top:15px;">
+            <strong>Dans chaque point :</strong>
+            <ul style="margin:8px 0 0 18px;">
+              <li>numéro de l’œuvre</li>
+              <li>localisation précise</li>
+              <li>dessin original</li>
+              <li>accès à la notice de la BnF</li>
+            </ul>
+          </div>
 
-        <div style="background:#f5f3f0; padding:12px; border-radius:8px; margin-top:15px;">
-          <strong>Dans chaque point :</strong>
-          <ul style="margin:8px 0 0 18px;">
-            <li>numéro de l’œuvre</li>
-            <li>localisation précise</li>
-            <li>dessin original</li>
-            <li>accès à la notice de la BnF</li>
-          </ul>
+          <p style="margin-top:15px;">
+            <a
+              href="infos.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              style="color:#2a5db0; text-decoration:underline;"
+            >
+              Informations générales / sources / droits
+            </a>
+          </p>
         </div>
+      </aside>
 
-        <p style="margin-top:15px;">
-          <a href="infos.html" target="_blank" rel="noopener noreferrer" style="color:#2a5db0; text-decoration:underline;">
-  Informations générales / sources / droits
-</a>
-        </p>
-
-      </div>
-    </aside>
-
-    <div id="map"></div>
-  </div>
-
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-  ></script>
-  <script>
-    const oeuvres = [
-
-  <p>
-    Cette carte vous permet de retrouver, presque pas à pas, les lieux exacts où il a installé son chevalet.
-  </p>
-
-  <p>
-    👉 Cliquez sur un point pour découvrir le dessin original<br>
-    et comparez le passé avec le paysage actuel.
-  </p>
-
-  <hr style="margin: 20px 0;">
-
-  <p style="font-size: 0.95em; color: #555;">
-    Projet pilote — <strong>cetaitici.fr</strong><br>
-    <em>"C’était ici". L’histoire, là où elle s’est passée.</em>
-  </p>
-
-  <div style="background:#f5f3f0; padding:12px; border-radius:8px; margin-top:15px;">
-    <strong>Dans chaque point :</strong>
-    <ul style="margin:8px 0 0 18px;">
-      <li>numéro de l’œuvre</li>
-      <li>localisation précise</li>
-      <li>dessin original</li>
-      <li>accès à la notice de la BnF</li>
-    </ul>
-  </div>
-
-  <p style="margin-top:15px;">
-    <a href="#" style="color:#2a5db0; text-decoration:underline;">
-      Informations générales / sources / droits
-    </a>
-  </p>
-
-</div>
+      <div id="map"></div>
+    </div>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -363,6 +357,67 @@
       }).addTo(map);
 
       const bounds = L.latLngBounds([]);
+      let userMarker = null;
+      let userCircle = null;
+      let isFollowingUser = false;
+
+      const LocateControl = L.Control.extend({
+        options: {
+          position: "topright",
+        },
+
+        onAdd() {
+          const wrapper = L.DomUtil.create("div", "locate-control");
+          const button = L.DomUtil.create("button", "", wrapper);
+          const status = L.DomUtil.create("div", "location-status", wrapper);
+
+          button.type = "button";
+          button.textContent = "Me localiser";
+          status.textContent = "Touchez le bouton pour activer votre position.";
+
+          L.DomEvent.disableClickPropagation(wrapper);
+          L.DomEvent.on(button, "click", () => {
+            if (isFollowingUser) {
+              map.stopLocate();
+              isFollowingUser = false;
+              button.classList.remove("is-active");
+              button.textContent = "Me localiser";
+              status.textContent = "Suivi arrêté.";
+              return;
+            }
+
+            status.textContent = "Recherche de votre position…";
+            map.locate({
+              setView: false,
+              watch: true,
+              enableHighAccuracy: true,
+              maxZoom: 17,
+            });
+          });
+
+          this._button = button;
+          this._status = status;
+          return wrapper;
+        },
+      });
+
+      const locateControl = new LocateControl();
+      map.addControl(locateControl);
+
+      function setLocateStatus(message) {
+        if (locateControl._status) {
+          locateControl._status.textContent = message;
+        }
+      }
+
+      function setLocateActive(active) {
+        isFollowingUser = active;
+        if (!locateControl._button) {
+          return;
+        }
+        locateControl._button.classList.toggle("is-active", active);
+        locateControl._button.textContent = active ? "Arrêter le suivi" : "Me localiser";
+      }
 
       for (const oeuvre of oeuvres) {
         const marker = L.marker([oeuvre.latitude, oeuvre.longitude], {
@@ -391,6 +446,41 @@
         marker.addTo(map);
         bounds.extend([oeuvre.latitude, oeuvre.longitude]);
       }
+
+      map.on("locationfound", (event) => {
+        if (!userMarker) {
+          userMarker = L.marker(event.latlng, {
+            title: "Vous êtes ici",
+          }).addTo(map);
+        } else {
+          userMarker.setLatLng(event.latlng);
+        }
+
+        userMarker.bindPopup("Vous êtes ici");
+
+        if (!userCircle) {
+          userCircle = L.circle(event.latlng, {
+            radius: event.accuracy,
+            color: "#2a5db0",
+            weight: 1,
+            fillColor: "#2a5db0",
+            fillOpacity: 0.16,
+          }).addTo(map);
+        } else {
+          userCircle.setLatLng(event.latlng);
+          userCircle.setRadius(event.accuracy);
+        }
+
+        map.setView(event.latlng, 17);
+        setLocateActive(true);
+        setLocateStatus("Position active. La carte suit votre déplacement.");
+      });
+
+      map.on("locationerror", (event) => {
+        map.stopLocate();
+        setLocateActive(false);
+        setLocateStatus(event.message || "Impossible d’obtenir votre position.");
+      });
 
       if (oeuvres.length === 1) {
         map.setView([oeuvres[0].latitude, oeuvres[0].longitude], 14);
