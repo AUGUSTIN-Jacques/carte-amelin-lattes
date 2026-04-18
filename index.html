@@ -1,10 +1,9 @@
-<title>Carte Amelin V2</title>
 <!DOCTYPE html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sur les pas d’Amelin – cetaitici.fr</title>
+    <title>Carte interactive des oeuvres</title>
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -161,37 +160,29 @@
   <body>
     <div class="layout">
       <aside class="sidebar">
-        <p class="eyebrow">Promenade historique</p>
-        <h1>Remontez le temps… à cet endroit précis.</h1>
+        <p class="eyebrow">Inventaire des tableaux</p>
+        <h1>Carte interactive des oeuvres</h1>
         <p class="intro">
-          Au XIXe siècle, Jean-Marie Amelin a dessiné ces paysages tels qu’ils existaient.</p>
-<p>Cette carte vous permet de retrouver précisément les lieux où il a posé son regard.</p>
-<p><strong>👉 Cliquez sur un point de la carte pour découvrir le dessin original.</strong></p>
-<p>Comparez le passé et le présent…sur le terrain.</p>
-<p><em>.</em></p>
-</p>
+          Cette carte affiche les oeuvres géolocalisées extraites de la base Notion.
+          Chaque point montre l'identifiant de l'oeuvre et ouvre un lien cliquable vers la notice.
+        </p>
         <p class="hint">
-          L'équipe Histoire et Patrimoine de L.L.C.
-        </p><p style="margin-top:20px; font-size:0.9em; color:#666;">
-  Projet pilote – <a href="https://cetaitici.fr" target="_blank"><strong>cetaitici.fr</strong></a><br>
-  <em>C’était ici. L’histoire, là où elle s’est passée.</em>
-</p>
+          Cliquez sur un point pour afficher le détail. La carte est centrée automatiquement
+          sur l'ensemble des oeuvres disponibles.
+        </p>
         <div class="legend">
-          <strong>Informations disponibles :</strong>
+          <strong>Champs affichés</strong>
           <ul>
-            <li> numéro de l’œuvre </li>
-            <li>  localisation </li>
-            <li>  lien vers le dessin original </li>
+            <li>`id` de l'oeuvre</li>
+            <li>`titre`</li>
+            <li>`latitude` / `longitude`</li>
+            <li>`lien_oeuvre` cliquable</li>
           </ul>
-        </div><p style="margin-top:15px;">
-  <a href="infos.html" target="_blank">
-  ℹ️ Informations générales / sources / droits
-  </a>
-</p>
+        </div>
       </aside>
-      <main id="map" aria-label="Sur les pas d’Amelin – cetaitici.fr"></main>
+      <main id="map" aria-label="Carte interactive des oeuvres"></main>
     </div>
-<title>Sur les pas d’Amelin – cetaitici.fr</title>
+
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -199,98 +190,97 @@
     ></script>
     <script>
       const oeuvres = [
-  {
-    "id": 52,
-    "titre": "Bords du Lez, près la 3e écluse, Lattes",
-    "description": "Vue des abords du Lez près de la troisième écluse de Lattes.",
-    "latitude": 43.555464,
-    "longitude": 3.897237,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485976z/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 55,
-    "titre": "Près la 3e écluse sur le Lez, Lattes",
-    "description": "Vue du Lez au XIXe siècle dans le secteur de la troisième écluse.",
-    "latitude": 43.561222,
-    "longitude": 3.892101,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485977d/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 57,
-    "titre": "A la 3e écluse, Lattes",
-    "description": "Vue de la troisième écluse dans le paysage fluvial de Lattes.",
-    "latitude": 43.561615,
-    "longitude": 3.89455,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485978v/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 62,
-    "titre": "A la 3e écluse, Lattes",
-    "description": "Autre vue du secteur de la troisième écluse à Lattes.",
-    "latitude": 43.56169,
-    "longitude": 3.894516,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b104859799/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 64,
-    "titre": "A la troisième écluse, Lattes",
-    "description": "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
-    "latitude": 43.561868,
-    "longitude": 3.89473,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485980p/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 65,
-    "titre": "2e écluse sur le Lez, Lattes",
-    "description": "Vue d'écluse et de berge dans le paysage fluvial de Lattes.",
-    "latitude": 43.56323,
-    "longitude": 3.895824,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10486384j/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 67,
-    "titre": "A la troisième écluse, Lattes",
-    "description": "Scène du Lez au XIXe siècle autour de la troisième écluse.",
-    "latitude": 43.5629,
-    "longitude": 3.89573,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b104859814/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 70,
-    "titre": "A la troisième écluse, Lattes",
-    "description": "Scène du Lez au XIXe siècle autour des circulations d'eau.",
-    "latitude": 43.561964,
-    "longitude": 3.895391,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485982k/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 74,
-    "titre": "A la troisième écluse, Lattes",
-    "description": "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
-    "latitude": 43.562118,
-    "longitude": 3.894735,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10486377g/f1.highres",
-    "type_de_lieu": "Écluse"
-  },
-  {
-    "id": 80,
-    "titre": "A la troisième écluse, Lattes",
-    "description": "Paysage du Lez et de ses ouvrages hydrauliques près de Lattes.",
-    "latitude": 43.562964,
-    "longitude": 3.894616,
-    "image": "https://gallica.bnf.fr/ark:/12148/btv1b10485975h/f1.highres",
-    "type_de_lieu": "Écluse"
-  }
-]
-;
+        {
+          id: 52,
+          titre: "Bords du Lez, près la 3e écluse, Lattes",
+          description: "Vue des abords du Lez près de la troisième écluse de Lattes.",
+          latitude: 43.555464,
+          longitude: 3.897237,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485976z/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177801",
+        },
+        {
+          id: 55,
+          titre: "Près la 3e écluse sur le Lez, Lattes",
+          description: "Vue du Lez au XIXe siècle dans le secteur de la troisième écluse.",
+          latitude: 43.561222,
+          longitude: 3.892101,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485977d/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917781c",
+        },
+        {
+          id: 57,
+          titre: "A la 3e écluse, Lattes",
+          description: "Vue de la troisième écluse dans le paysage fluvial de Lattes.",
+          latitude: 43.561615,
+          longitude: 3.89455,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485978v/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917782q",
+        },
+        {
+          id: 62,
+          titre: "A la 3e écluse, Lattes",
+          description: "Autre vue du secteur de la troisième écluse à Lattes.",
+          latitude: 43.56169,
+          longitude: 3.894516,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b104859799/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177832",
+        },
+        {
+          id: 64,
+          titre: "A la troisième écluse, Lattes",
+          description: "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
+          latitude: 43.561868,
+          longitude: 3.89473,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485980p/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917784d",
+        },
+        {
+          id: 65,
+          titre: "2e écluse sur le Lez, Lattes",
+          description: "Vue d'écluse et de berge dans le paysage fluvial de Lattes.",
+          latitude: 43.56323,
+          longitude: 3.895824,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10486384j/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917794q",
+        },
+        {
+          id: 67,
+          titre: "A la troisième écluse, Lattes",
+          description: "Scène du Lez au XIXe siècle autour de la troisième écluse.",
+          latitude: 43.5629,
+          longitude: 3.89573,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b104859814/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917785r",
+        },
+        {
+          id: 70,
+          titre: "A la troisième écluse, Lattes",
+          description: "Scène du Lez au XIXe siècle autour des circulations d'eau.",
+          latitude: 43.561964,
+          longitude: 3.895391,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485982k/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177863",
+        },
+        {
+          id: 74,
+          titre: "A la troisième écluse, Lattes",
+          description: "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
+          latitude: 43.562118,
+          longitude: 3.894735,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10486377g/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917787f",
+        },
+        {
+          id: 80,
+          titre: "A la troisième écluse, Lattes",
+          description: "Paysage du Lez et de ses ouvrages hydrauliques près de Lattes.",
+          latitude: 43.562964,
+          longitude: 3.894616,
+          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485975h/f1.highres",
+          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917779t",
+        },
+      ];
 
       const map = L.map("map", {
         zoomControl: true,
@@ -315,11 +305,15 @@
         });
 
         marker.bindPopup(`
-          <div>
+          <div style="max-width:260px;">
             <span class="popup-id">ID ${oeuvre.id}</span>
             <h2 class="popup-title">${oeuvre.titre}</h2>
-            <p class="popup-description">${oeuvre.description}</p>
-            <p><a class="popup-link" href="${oeuvre.lien_oeuvre}" target="_blank" rel="noopener noreferrer">Voir le tableau sur le site de la BnF</a></p>
+            <a href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">
+              <img src="${oeuvre.image}" style="width:100%; max-height:220px; object-fit:contain;" alt="${oeuvre.titre}">
+            </a><br><br>
+            <p><a class="popup-link" href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">Ouvrir l’image en grand</a></p>
+            <p class="popup-description"><em>${oeuvre.description}</em></p>
+            <p><a class="popup-link" href="${oeuvre.lien_oeuvre}" target="_blank" rel="noopener noreferrer">Voir la notice BnF</a></p>
           </div>
         `);
 
