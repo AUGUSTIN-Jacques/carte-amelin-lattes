@@ -158,19 +158,66 @@
     </style>
   </head>
   <body>
-    <div class="sidebar-content">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-content">
 
-  <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em; color: #a65c3a;">
-    Promenade historique
-  </p>
+        <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.9em; color: #a65c3a;">
+          Promenade historique
+        </p>
 
-  <h1 style="margin-top: 0;">
-    Remontez le temps… ici même.
-  </h1>
+        <h1 style="margin-top: 0;">
+          Remontez le temps… ici même.
+        </h1>
 
-  <p>
-    Au XIXe siècle, Jean-Marie Amelin a posé son regard sur ces paysages aujourd’hui transformés.
-  </p>
+        <p>
+          Au XIXe siècle, Jean-Marie Amelin a posé son regard sur ces paysages aujourd’hui transformés.
+        </p>
+
+        <p>
+          Cette carte vous permet de retrouver, presque pas à pas, les lieux exacts où il a installé son chevalet.
+        </p>
+
+        <p>
+          👉 Cliquez sur un point pour découvrir le dessin original<br>
+          et comparez le passé avec le paysage actuel.
+        </p>
+
+        <hr style="margin: 20px 0;">
+
+        <p style="font-size: 0.95em; color: #555;">
+          Projet pilote — <strong>cetaitici.fr</strong><br>
+          <em>"C’était ici". L’histoire, là où elle s’est passée.</em>
+        </p>
+
+        <div style="background:#f5f3f0; padding:12px; border-radius:8px; margin-top:15px;">
+          <strong>Dans chaque point :</strong>
+          <ul style="margin:8px 0 0 18px;">
+            <li>numéro de l’œuvre</li>
+            <li>localisation précise</li>
+            <li>dessin original</li>
+          </ul>
+        </div>
+
+        <p style="margin-top:15px;">
+          <a href="#" style="color:#2a5db0; text-decoration:underline;">
+            Informations générales / sources / droits
+          </a>
+        </p>
+
+      </div>
+    </aside>
+
+    <div id="map"></div>
+  </div>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    const oeuvres = [
 
   <p>
     Cette carte vous permet de retrouver, presque pas à pas, les lieux exacts où il a installé son chevalet.
