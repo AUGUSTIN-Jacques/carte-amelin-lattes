@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Choisir un parcours – cetaitici</title>
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: #f7f1e9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .intro {
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      text-align: left;
+    }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    .card p {
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 18px;
+      background: #a65c3a;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .coming {
+      opacity: 0.7;
+    }
+
+    .label {
+      font-size: 0.8rem;
+      color: #a65c3a;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Choisissez votre parcours</h1>
+
+  <p class="intro">
+    Plusieurs façons de découvrir le territoire.  
+    À pied, à vélo, seul ou en famille… laissez-vous guider.
+  </p>
+
+  <div class="grid">
+
+    <!-- PARCOURS ACTUEL -->
+    <div class="card">
+      <span class="label">Disponible</span>
+      <h2>Sur les traces d’Amelin</h2>
+      <p>
+        Parcourez les paysages dessinés au XIXe siècle et comparez-les avec le territoire d’aujourd’hui.
+        Écluses, bords du Lez, points de vue…
+      </p>
+      <a href="index.html" class="btn">Commencer</a>
+    </div>
+
+    <!-- PARCOURS FUTURS -->
+    <div class="card coming">
+      <span class="label">En préparation</span>
+      <h2>Lattes pendant la Seconde Guerre mondiale</h2>
+      <p>
+        Découvrez les lieux marqués par la guerre, les événements, les témoignages et la mémoire locale.
+      </p>
+    </div>
+
+    <div class="card coming">
+      <span class="label">En préparation</span>
+      <h2>Lattes au Moyen Âge</h2>
+      <p>
+        Ports anciens, chemins, traces du passé médiéval… une autre lecture du territoire.
+      </p>
+    </div>
+
+    <div class="card coming">
+      <span class="label">En préparation</span>
+      <h2>Les anciens mas de Lattes</h2>
+      <p>
+        Redécouvrez les lieux de vie et d’exploitation agricole à travers les recherches de l’association.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
