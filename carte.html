@@ -489,34 +489,42 @@
         map.fitBounds(bounds.pad(0.18));
       }
     </script>
-    <!-- Navigation -->
-  <div style="margin-bottom:15px;">
-    <a href="index.html" style="margin:0 12px; color:#2a5db0; text-decoration:none;">Accueil</a>
-    <a href="parcours.html" style="margin:0 12px; color:#2a5db0; text-decoration:none;">Parcours</a>
-    <a href="carte.html" style="margin:0 12px; color:#2a5db0; text-decoration:none;">Carte</a>
-    <a href="infos.html" style="margin:0 12px; color:#2a5db0; text-decoration:none;">Infos</a>
+<div style="
+  margin-top:40px;
+  padding:15px 20px;
+  border-top:1px solid #ddd;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  font-size:0.85rem;
+  color:#555;
+  gap:10px;
+">
+
+  <!-- Navigation -->
+  <div>
+    <a href="index.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Accueil</a>
+    <a href="parcours.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Parcours</a>
+    <a href="carte.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Carte</a>
+    <a href="infos.html" style="color:#2a5db0; text-decoration:none;">Infos</a>
   </div>
 
-  <!-- Email doux -->
-  <div style="margin-bottom:15px;">
-    <p style="margin:5px 0;">Vous avez aimé cette découverte ?</p>
-    <p style="margin:5px 0;">Recevez les prochaines près de chez vous.</p>
-
-    <input type="email" placeholder="Votre email"
-           style="padding:6px; width:180px; margin-right:6px; border-radius:4px; border:1px solid #ccc;">
-    
-    <button style="padding:6px 12px; background:#a65c3a; color:white; border:none; border-radius:4px;">
+  <!-- Email discret -->
+  <div>
+    <span>Recevoir les prochaines découvertes :</span>
+    <input type="email" placeholder="email"
+           style="padding:5px; margin-left:6px; width:140px; border:1px solid #ccc; border-radius:4px;">
+    <button style="padding:5px 8px; margin-left:4px; background:#a65c3a; color:white; border:none; border-radius:4px;">
       OK
     </button>
   </div>
 
-  <!-- Mention rassurante -->
+  <!-- Mention -->
   <div style="font-size:0.75rem; color:#777;">
-    Projet associatif • Accès libre et gratuit • Aucune utilisation commerciale
+    Projet associatif • Gratuit
   </div>
 
 </div>
-      
-
   </body>
 </html>
