@@ -2,202 +2,270 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Informations – cetaitici</title>
-
-  <script data-goatcounter="https://cetaitici.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
-
+  <script data-goatcounter="https://cetaitici.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <style>
+    :root {
+      --bg: #f4ecdf;
+      --card: rgba(255, 251, 246, 0.88);
+      --ink: #2f241c;
+      --muted: #62564d;
+      --accent: #a65c3a;
+      --border: rgba(73, 43, 23, 0.12);
+      --nav-bg: rgba(43, 29, 20, 0.94);
+      --nav-text: rgba(255, 245, 236, 0.72);
+      --nav-active: #fffaf3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      background: #f4ecdf;
-      color: #2f241c;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      line-height: 1.6;
+      background:
+        radial-gradient(circle at top left, rgba(166, 92, 58, 0.10), transparent 28%),
+        linear-gradient(180deg, #f7f1e9 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px 14px 88px;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .hero,
+    .info-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: 0 16px 34px rgba(72, 47, 31, 0.06);
+    }
+
+    .hero {
+      padding: 18px 16px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 1rem;
+    }
+
+    .content {
+      display: grid;
+      gap: 12px;
+    }
+
+    .info-block {
+      padding: 16px;
+    }
+
+    .info-block h2 {
+      margin: 0 0 10px;
+      font-size: 1.16rem;
+      line-height: 1.2;
+    }
+
+    .info-block p,
+    .info-block li {
+      margin: 0 0 10px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.97rem;
+    }
+
+    .info-block ul {
+      margin: 0;
+      padding-left: 18px;
     }
 
     a {
-      color: #a65c3a;
+      color: var(--accent);
       text-decoration: none;
     }
 
     a:hover {
       text-decoration: underline;
     }
+
+    .mobile-nav {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 6px;
+      border-radius: 16px;
+      background: var(--nav-bg);
+      box-shadow: 0 18px 36px rgba(18, 12, 8, 0.24);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      color: var(--nav-text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .mobile-nav__item.is-active {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--nav-active);
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding: 28px 24px 40px;
+      }
+
+      .hero {
+        padding: 26px 26px 22px;
+      }
+
+      .hero p,
+      .info-block p,
+      .info-block li {
+        font-size: 1rem;
+      }
+
+      .mobile-nav {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
-<p style="margin-bottom:20px;">
-  <a href="carte.html">← Retour à la carte</a>
-</p>
-<h1>Informations générales</h1>
+  <main class="page">
+    <a href="carte.html" class="top-link">← Retour à la carte</a>
 
-<p>
-Cette application web (web app) propose une découverte du patrimoine sur le terrain grâce à des parcours historiques géolocalisés, à partir de documents anciens localisés avec le plus de précision possible.
-</p>
+    <section class="hero">
+      <h1>Informations générales</h1>
+      <p>
+        Cette web app propose une découverte du patrimoine sur le terrain grâce à des parcours historiques
+        géolocalisés, à partir de documents anciens localisés avec le plus de précision possible.
+      </p>
+    </section>
 
-<h2>📚 Sources</h2>
+    <div class="content">
+      <section class="info-block">
+        <h2>Sources</h2>
+        <p>
+          Les œuvres présentées dans « Sur les traces d’Amelin » proviennent principalement des collections
+          de la Bibliothèque nationale de France et de sa bibliothèque numérique Gallica.
+        </p>
+        <p>
+          Certaines références sont également issues des médiathèques de Montpellier Méditerranée Métropole.
+        </p>
+        <ul>
+          <li><a href="https://gallica.bnf.fr" target="_blank" rel="noopener noreferrer">Gallica – BnF</a></li>
+          <li><a href="https://catalogue.bnf.fr" target="_blank" rel="noopener noreferrer">Catalogue BnF</a></li>
+          <li><a href="https://mediatheques.montpellier3m.fr" target="_blank" rel="noopener noreferrer">Médiathèques Montpellier Méditerranée Métropole</a></li>
+        </ul>
+      </section>
 
-<p>
-Les œuvres présentées "Sur les traces d'Amelin" proviennent principalement des collections de la Bibliothèque nationale de France (BnF) et de sa bibliothèque numérique Gallica.
-</p>
+      <section class="info-block">
+        <h2>Droits</h2>
+        <p>
+          Les images sont diffusées conformément aux conditions d’utilisation des institutions qui les diffusent.
+          Pour toute réutilisation, merci de consulter les mentions légales des sites d’origine.
+        </p>
+      </section>
 
-<p>
-Certaines références sont également issues des médiathèques de Montpellier Méditerranée Métropole.
-</p>
+      <section class="info-block">
+        <h2>Consultation des originaux</h2>
+        <p>Les documents peuvent être consultés, sous réserve de disponibilité, à :</p>
+        <p>
+          <strong>Médiathèque Émile Zola</strong><br>
+          218 boulevard de l’Aéroport International<br>
+          34000 Montpellier
+        </p>
+      </section>
 
-<ul>
-<li><a href="https://gallica.bnf.fr" target="_blank">Gallica – BnF</a></li>
-<li><a href="https://catalogue.bnf.fr" target="_blank">Catalogue BnF</a></li>
-<li><a href="https://mediatheques.montpellier3m.fr" target="_blank">Médiathèques Montpellier Méditerranée Métropole</a></li>
-</ul>
+      <section class="info-block">
+        <h2>Utilisation</h2>
+        <p>
+          La web app est conçue pour un usage simple, notamment sur smartphone ou tablette connectée.
+          Vous pouvez ouvrir la carte, activer la géolocalisation si vous le souhaitez et explorer les points proposés à proximité.
+        </p>
+      </section>
 
-<h2>⚖️ Droits</h2>
+      <section class="info-block">
+        <h2>Propriété intellectuelle</h2>
+        <p>
+          © 2026 LLC Histoire et Patrimoine 34970 – « C’était ici ! »
+        </p>
+        <p>
+          Les textes originaux, la structure du site, le logo original et les éléments graphiques propres au site
+          sont protégés par le droit d’auteur.
+        </p>
+      </section>
 
-<p>
-Les images sont diffusées conformément aux conditions d’utilisation des institutions qui les diffusent.
-</p>
+      <section class="info-block">
+        <h2>Mesure d’audience</h2>
+        <p>
+          Cette web app utilise un outil de mesure d’audience configuré de manière respectueuse de la vie privée,
+          sans cookies, sans suivi publicitaire ni revente de données. Les informations collectées sont anonymes
+          et limitées à la fréquentation générale du site.
+        </p>
+      </section>
 
-<p>
-Pour toute réutilisation, veuillez consulter les mentions légales des sites d’origine.
-</p>
+      <section class="info-block">
+        <h2>Utilisation sur le terrain</h2>
+        <p>
+          La consultation de cette web app se fait sous la responsabilité de l’utilisateur.
+          Merci de respecter les règles de sécurité, la signalisation et les propriétés privées.
+        </p>
+        <p>
+          L’usage du smartphone ou de la tablette doit rester compatible avec les déplacements et la vigilance nécessaire en extérieur.
+        </p>
+      </section>
 
-<h2>🏛️ Consultation des originaux</h2>
+      <section class="info-block">
+        <h2>Contact</h2>
+        <p>
+          Pour toute question ou remarque :
+          <a href="mailto:P4S34090@gmail.com">P4S34090@gmail.com</a>
+        </p>
+      </section>
+    </div>
+  </main>
 
-<p>
-Les documents peuvent être consultés, sous réserve de disponibilité, à :
-</p>
-
-<p>
-<strong>Médiathèque Émile Zola</strong><br>
-218 boulevard de l’Aéroport International<br>
-34000 Montpellier
-</p>
-<main class="container page-section">
-
-  
-    </p>
-  </section>
-
-  <section class="info-block">
-    <h2>Utilisation</h2>
-    <p>
-      La web app est conçue pour un usage simple, notamment sur smartphone ou tablette connectée.
-      Lors de vos déplacements, vous pouvez ouvrir la carte, activer la
-      géolocalisation si vous le souhaitez, et explorer les points proposés
-      à proximité.
-    </p>
-  </section>
-
-  <section class="info-block">
-    <h2>Propriété intellectuelle</h2>
-    <p>
-      © 2026 LLC Histoire et Patrimoine 34970 – "C’était ici !"<br><br>
-      Les textes originaux, la structure du site, le logo original et les éléments
-      graphiques propres au site sont protégés par le droit d’auteur.
-    </p>
-  </section>
-
-  <section class="info-block">
-    <h2>Sources et droits</h2>
-    <p>
-      Les œuvres, images et documents présentés proviennent de fonds publics
-      ou d’institutions patrimoniales (notamment Gallica / BnF et médiathèques).
-      Chaque document reste soumis aux droits et conditions de réutilisation
-      de son diffuseur.
-    </p>
-    <p>
-      Lorsque cela est possible, des liens vers les notices originales sont fournis.
-      Pour toute question relative aux droits, veuillez vous référer aux sites
-      des institutions concernées.
-    </p>
-  </section>
-
-  <section class="info-block">
-    <h2>Mesure d’audience</h2>
-    <p>
-      Cette web app utilise un outil de mesure d’audience configuré de manière
-      respectueuse de la vie privée, sans suivi publicitaire, sans cookies, ni suivi individuel ni revente de données.
-      Les informations collectées sont strictement anonymes et limitées à la fréquentation
-      générale du site, afin d’en améliorer le contenu et l’ergonomie.
-    </p>
-  </section>
-
-  <section class="info-block">
-    <h2>Contact</h2>
-    <p>
-      Pour toute question ou remarque :
-      <a href="mailto:P4S34090@gmail.com">P4S34090@gmail.com</a>
-    </p>
-  </section>
-
-</main>
-<h2>⚠️ Utilisation sur le terrain</h2>
-
-<p>
-La consultation de cette web app se fait sous la responsabilité de l’utilisateur.
-</p>
-
-<p>
-Merci de respecter les règles de sécurité, la signalisation et les propriétés privées.
-</p>
-
-<p>
-L’usage du smartphone ou tablette connectée doit rester compatible avec les déplacements et la vigilance nécessaire en extérieur.
-</p>
-<p style="margin-top:40px;">
-  <a href="index.html">← Retour à la carte</a>
-</p>
-<div style="
-  margin-top:40px;
-  padding:15px 20px;
-  border-top:1px solid #ddd;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  font-size:0.85rem;
-  color:#555;
-  gap:10px;
-">
-
-  <div style="
-  margin-top:15px;
-  padding:12px 20px;
-  border-top:1px solid #ddd;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  font-size:0.85rem;
-  color:#555;
-  gap:10px;
-">
-
-  <!-- Navigation -->
-  <div>
-    <a href="index.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Accueil</a>
-    <a href="parcours.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Parcours</a>
-    <a href="carte.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Carte</a>
-    <a href="infos.html" style="color:#2a5db0; text-decoration:none;">Infos</a>
-  </div>
-
-  <!-- Email discret -->
-  <div>
-    <span>Recevoir les prochaines découvertes :</span>
-    <input type="email" placeholder="email"
-           style="padding:5px; margin-left:6px; width:140px; border:1px solid #ccc; border-radius:4px;">
-    <button style="padding:5px 8px; margin-left:4px; background:#a65c3a; color:white; border:none; border-radius:4px;">
-      OK
-    </button>
-  </div>
-
-  <!-- Mention -->
-  <div style="font-size:0.75rem; color:#777;">
-    Projet associatif • Utilisation totalement gratuite
-  </div>
-
-</div>
-</div>
+  <nav class="mobile-nav" aria-label="Navigation principale">
+    <a href="index.html" class="mobile-nav__item">Accueil</a>
+    <a href="parcours.html" class="mobile-nav__item">Parcours</a>
+    <a href="carte.html" class="mobile-nav__item">Carte</a>
+    <a href="infos.html" class="mobile-nav__item is-active">Infos</a>
+  </nav>
+</body>
+</html>

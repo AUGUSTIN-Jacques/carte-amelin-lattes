@@ -2,168 +2,223 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Choisir un parcours – cetaitici</title>
-
   <style>
+    :root {
+      --bg: #f7f1e9;
+      --card: rgba(255, 255, 255, 0.88);
+      --ink: #2f241c;
+      --muted: #62564d;
+      --accent: #a65c3a;
+      --border: rgba(73, 43, 23, 0.10);
+      --nav-bg: rgba(43, 29, 20, 0.94);
+      --nav-text: rgba(255, 245, 236, 0.72);
+      --nav-active: #fffaf3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: Georgia, serif;
-      background: #f7f1e9;
-      color: #333;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, rgba(166, 92, 58, 0.08), transparent 28%),
+        linear-gradient(180deg, #fbf6f0 0%, var(--bg) 100%);
+      color: var(--ink);
     }
 
     .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
-      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 18px 14px 88px;
+    }
+
+    .hero {
+      margin-bottom: 14px;
+      padding: 18px 16px;
+      border-radius: 18px;
+      background: rgba(255, 251, 246, 0.88);
+      border: 1px solid var(--border);
+      text-align: left;
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 8vw, 3rem);
+      line-height: 1.02;
     }
 
     .intro {
-      color: #666;
-      margin-bottom: 40px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 1rem;
     }
 
     .grid {
       display: grid;
-      gap: 20px;
+      gap: 12px;
     }
 
     .card {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      text-align: left;
+      background: var(--card);
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--border);
     }
 
     .card h2 {
-      margin-top: 0;
+      margin: 0 0 10px;
+      font-size: 1.3rem;
+      line-height: 1.15;
     }
 
     .card p {
-      color: #555;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.48;
+      font-size: 0.97rem;
     }
 
     .btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 18px;
-      background: #a65c3a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      min-height: 44px;
+      padding: 10px 16px;
+      background: var(--accent);
       color: white;
       text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
+      border-radius: 10px;
+      font-weight: 700;
     }
 
     .coming {
-      opacity: 0.7;
+      opacity: 0.78;
     }
 
     .label {
-      font-size: 0.8rem;
-      color: #a65c3a;
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 6px;
-      display: block;
+      letter-spacing: 0.08em;
+    }
+
+    .mobile-nav {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 6px;
+      border-radius: 16px;
+      background: var(--nav-bg);
+      box-shadow: 0 18px 36px rgba(18, 12, 8, 0.24);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      color: var(--nav-text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .mobile-nav__item.is-active {
+      background: rgba(255, 255, 255, 0.12);
+      color: var(--nav-active);
+    }
+
+    @media (min-width: 760px) {
+      .container {
+        padding: 28px 24px 40px;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mobile-nav {
+        display: none;
+      }
     }
   </style>
   <script data-goatcounter="https://cetaitici.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
-
 <body>
-
-<div class="container">
-
-  <h1>Choisissez votre parcours</h1>
-
-  <p class="intro">
-    Plusieurs façons de découvrir le territoire.  
-    À pied, à vélo, seul ou en famille… laissez-vous guider.
-  </p>
-
-  <div class="grid">
-
-    <!-- PARCOURS ACTUEL -->
-    <div class="card">
-      <span class="label">Disponible</span>
-      <h2>Sur les traces d’Amelin</h2>
-      <p>
-        Parcourez les paysages dessinés au XIXe siècle et comparez-les avec le territoire d’aujourd’hui.
-        Écluses, bords du Lez, points de vue…
+  <main class="container">
+    <section class="hero">
+      <h1>Choisissez votre parcours</h1>
+      <p class="intro">
+        Plusieurs façons de découvrir le territoire. À pied, à vélo, seul ou en famille, laissez-vous guider.
       </p>
-      <a href="carte.html" class="btn">Commencer</a>
-    </div>
+    </section>
 
-    <!-- PARCOURS FUTURS -->
-    <div class="card coming">
-      <span class="label">En préparation</span>
-      <h2>Lattes pendant la Seconde Guerre mondiale</h2>
-      <p>
-        Découvrez les lieux marqués par la guerre, les événements, les témoignages et la mémoire locale.
-      </p>
-    </div>
+    <section class="grid">
+      <article class="card">
+        <span class="label">Disponible</span>
+        <h2>Sur les traces d’Amelin</h2>
+        <p>
+          Parcourez les paysages dessinés au XIXe siècle et comparez-les avec le territoire d’aujourd’hui.
+          Écluses, bords du Lez, points de vue…
+        </p>
+        <a href="carte.html" class="btn">Commencer</a>
+      </article>
 
-    <div class="card coming">
-      <span class="label">En préparation</span>
-      <h2>Lattes au Moyen Âge</h2>
-      <p>
-        Ports anciens, chemins, traces du passé médiéval… une autre lecture du territoire.
-      </p>
-    </div>
+      <article class="card coming">
+        <span class="label">En préparation</span>
+        <h2>Lattes pendant la Seconde Guerre mondiale</h2>
+        <p>
+          Découvrez les lieux marqués par la guerre, les événements, les témoignages et la mémoire locale.
+        </p>
+      </article>
 
-    <div class="card coming">
-      <span class="label">En préparation</span>
-      <h2>Les anciens mas de Lattes</h2>
-      <p>
-        Redécouvrez les lieux de vie et d’exploitation agricole à travers les recherches de l’association.
-      </p>
-    </div>
+      <article class="card coming">
+        <span class="label">En préparation</span>
+        <h2>Lattes au Moyen Âge</h2>
+        <p>
+          Ports anciens, chemins, traces du passé médiéval… une autre lecture du territoire.
+        </p>
+      </article>
 
-  </div>
+      <article class="card coming">
+        <span class="label">En préparation</span>
+        <h2>Les anciens mas de Lattes</h2>
+        <p>
+          Redécouvrez les lieux de vie et d’exploitation agricole à travers les recherches de l’association.
+        </p>
+      </article>
+    </section>
+  </main>
 
-
-
-  
-
-<div style="
-  margin-top:15px;
-  padding:12px 20px;
-  border-top:1px solid #ddd;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  font-size:0.85rem;
-  color:#555;
-  gap:10px;
-">
-
-  <!-- Navigation -->
-  <div>
-    <a href="index.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Accueil</a>
-    <a href="parcours.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Parcours</a>
-    <a href="carte.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Carte</a>
-    <a href="infos.html" style="color:#2a5db0; text-decoration:none;">Infos</a>
-  </div>
-
-  <!-- Email discret -->
-  <div>
-    <span>Recevoir les prochaines découvertes :</span>
-    <input type="email" placeholder="email"
-           style="padding:5px; margin-left:6px; width:140px; border:1px solid #ccc; border-radius:4px;">
-    <button style="padding:5px 8px; margin-left:4px; background:#a65c3a; color:white; border:none; border-radius:4px;">
-      OK
-    </button>
-  </div>
-
-  <!-- Mention -->
-  <div style="font-size:0.75rem; color:#777;">
-    Projet associatif • Gratuit
-  </div>
+  <nav class="mobile-nav" aria-label="Navigation principale">
+    <a href="index.html" class="mobile-nav__item">Accueil</a>
+    <a href="parcours.html" class="mobile-nav__item is-active">Parcours</a>
+    <a href="carte.html" class="mobile-nav__item">Carte</a>
+    <a href="infos.html" class="mobile-nav__item">Infos</a>
+  </nav>
 </body>
 </html>

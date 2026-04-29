@@ -20,8 +20,11 @@
         --border: rgba(31, 26, 23, 0.14);
         --locate: #2a5db0;
         --locate-dark: #1f4b91;
+        --nav-bg: rgba(43, 29, 20, 0.94);
+        --nav-text: rgba(255, 245, 236, 0.72);
+        --nav-active: #fffaf3;
       }
-<div style="margin-top:50px; padding:25px 15px; text-align:center; background:#f5f3f0; font-size:0.9rem;">
+
 * {
         box-sizing: border-box;
       }
@@ -29,6 +32,7 @@
       body {
         margin: 0;
         min-height: 100vh;
+        overflow-x: hidden;
         color: var(--ink);
         background:
           radial-gradient(circle at top left, rgba(182, 84, 43, 0.16), transparent 28%),
@@ -96,14 +100,14 @@
       }
 
       .popup-title {
-        margin: 0 0 6px;
+        margin: 0 0 3px;
         font-size: 1rem;
-        line-height: 1.35;
+        line-height: 1.22;
       }
 
       .popup-id {
         display: inline-block;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         padding: 2px 7px;
         border-radius: 999px;
         background: #f0dfd4;
@@ -113,9 +117,31 @@
       }
 
       .popup-description {
-        margin: 0 0 10px;
+        margin: 0 0 4px;
         color: var(--muted);
-        line-height: 1.4;
+        line-height: 1.24;
+      }
+
+      .popup-card {
+        max-width: 242px;
+      }
+
+      .popup-card img {
+        display: block;
+        width: 100%;
+        max-height: 220px;
+        object-fit: contain;
+        margin: 0 0 2px;
+      }
+
+      .popup-card p {
+        margin: 0 0 4px;
+        font-size: 0.9rem;
+        line-height: 1.22;
+      }
+
+      .popup-card p:last-child {
+        margin-bottom: 0;
       }
 
       .popup-link {
@@ -143,16 +169,25 @@
         font-weight: 700;
       }
 
+      .locate-control {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+      }
+
       .locate-control button {
-        min-width: 118px;
-        padding: 10px 12px;
+        width: 42px;
+        height: 42px;
+        padding: 0;
         border: 0;
-        border-radius: 10px;
+        border-radius: 999px;
         background: var(--locate);
         color: #fff;
         box-shadow: 0 8px 20px rgba(25, 41, 70, 0.18);
-        font: 700 0.92rem/1.1 Georgia, "Times New Roman", serif;
+        font: 700 1rem/1 Georgia, "Times New Roman", serif;
         cursor: pointer;
+        transition: opacity 140ms ease, transform 140ms ease;
       }
 
       .locate-control button:hover {
@@ -164,17 +199,69 @@
       }
 
       .location-status {
-        margin-top: 10px;
-        padding: 8px 10px;
+        max-width: 176px;
+        padding: 7px 9px;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.9);
         color: var(--muted);
-        font-size: 0.88rem;
-        line-height: 1.35;
+        font-size: 0.8rem;
+        line-height: 1.28;
         box-shadow: 0 8px 20px rgba(25, 41, 70, 0.12);
       }
 
+      .locate-control.is-popup-open button {
+        opacity: 0.58;
+      }
+
+      .locate-control.has-user-interacted .location-status {
+        display: none;
+      }
+
+      .locate-control.is-popup-open .location-status {
+        display: none;
+      }
+
+      .mobile-nav {
+        position: fixed;
+        left: 10px;
+        right: 10px;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        z-index: 1000;
+        display: none;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        padding: 6px;
+        border-radius: 16px;
+        background: var(--nav-bg);
+        box-shadow: 0 18px 36px rgba(18, 12, 8, 0.24);
+        backdrop-filter: blur(10px);
+      }
+
+      .mobile-nav__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 40px;
+        padding: 6px 4px;
+        border-radius: 10px;
+        color: var(--nav-text);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+        line-height: 1.1;
+        text-align: center;
+      }
+
+      .mobile-nav__item.is-active {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--nav-active);
+      }
+
       @media (max-width: 860px) {
+        body {
+          padding-bottom: calc(76px + env(safe-area-inset-bottom));
+        }
+
         .layout {
           grid-template-columns: 1fr;
         }
@@ -186,6 +273,75 @@
 
         #map {
           min-height: 70vh;
+        }
+
+        .leaflet-container {
+          padding-bottom: 76px;
+        }
+
+        .leaflet-bottom {
+          bottom: calc(78px + env(safe-area-inset-bottom));
+        }
+
+        .leaflet-popup-content-wrapper {
+          padding: 4px;
+        }
+
+        .leaflet-popup-content {
+          margin: 6px 7px;
+        }
+
+        .leaflet-popup {
+          margin-bottom: 18px;
+        }
+
+        .leaflet-popup-close-button {
+          top: 6px;
+          right: 6px;
+          width: 24px;
+          height: 24px;
+          font-size: 18px;
+          line-height: 24px;
+        }
+
+        .popup-card {
+          max-width: 208px;
+        }
+
+        .popup-card img {
+          margin-bottom: 1px;
+        }
+
+        .popup-card p {
+          margin-bottom: 3px;
+          font-size: 0.84rem;
+          line-height: 1.18;
+        }
+
+        .popup-description {
+          margin-bottom: 3px;
+          line-height: 1.18;
+        }
+
+        .locate-control {
+          gap: 3px;
+        }
+
+        .locate-control button {
+          width: 38px;
+          height: 38px;
+          font-size: 0.95rem;
+        }
+
+        .location-status {
+          max-width: 138px;
+          padding: 5px 7px;
+          font-size: 0.72rem;
+          line-height: 1.15;
+        }
+
+        .mobile-nav {
+          display: grid;
         }
       }
     </style>
@@ -374,16 +530,18 @@
           const status = L.DomUtil.create("div", "location-status", wrapper);
 
           button.type = "button";
-          button.textContent = "Me localiser";
+          button.textContent = "◎";
+          button.setAttribute("aria-label", "Me localiser");
+          button.title = "Me localiser";
           status.textContent = "Touchez le bouton pour activer votre position.";
 
           L.DomEvent.disableClickPropagation(wrapper);
           L.DomEvent.on(button, "click", () => {
+            wrapper.classList.add("has-user-interacted");
             if (isFollowingUser) {
               map.stopLocate();
               isFollowingUser = false;
               button.classList.remove("is-active");
-              button.textContent = "Me localiser";
               status.textContent = "Suivi arrêté.";
               return;
             }
@@ -399,6 +557,7 @@
 
           this._button = button;
           this._status = status;
+          this._wrapper = wrapper;
           return wrapper;
         },
       });
@@ -418,7 +577,13 @@
           return;
         }
         locateControl._button.classList.toggle("is-active", active);
-        locateControl._button.textContent = active ? "Arrêter le suivi" : "Me localiser";
+      }
+
+      function setPopupOpenState(open) {
+        if (!locateControl._wrapper) {
+          return;
+        }
+        locateControl._wrapper.classList.toggle("is-popup-open", open);
       }
 
       for (const oeuvre of oeuvres) {
@@ -433,12 +598,12 @@
         });
 
         marker.bindPopup(`
-          <div style="max-width:260px;">
+          <div class="popup-card">
             <span class="popup-id">ID ${oeuvre.id}</span>
             <h2 class="popup-title">${oeuvre.titre}</h2>
             <a href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">
-              <img src="${oeuvre.image}" style="width:100%; max-height:220px; object-fit:contain;" alt="${oeuvre.titre}">
-            </a><br><br>
+              <img src="${oeuvre.image}" alt="${oeuvre.titre}">
+            </a>
             <p><a class="popup-link" href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">Ouvrir l’image en grand</a></p>
             <p class="popup-description"><em>${oeuvre.description}</em></p>
             <p><a class="popup-link" href="${oeuvre.lien_oeuvre}" target="_blank" rel="noopener noreferrer">Voir la notice BnF</a></p>
@@ -484,48 +649,28 @@
         setLocateStatus(event.message || "Impossible d’obtenir votre position.");
       });
 
+      map.on("popupopen", () => {
+        if (locateControl._wrapper) {
+          locateControl._wrapper.classList.add("has-user-interacted");
+        }
+        setPopupOpenState(true);
+      });
+
+      map.on("popupclose", () => {
+        setPopupOpenState(false);
+      });
+
       if (oeuvres.length === 1) {
         map.setView([oeuvres[0].latitude, oeuvres[0].longitude], 14);
       } else {
         map.fitBounds(bounds.pad(0.18));
       }
     </script>
-<div style="
-  margin-top:15px;
-  padding:12px 20px;
-  border-top:1px solid #ddd;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  font-size:0.85rem;
-  color:#555;
-  gap:10px;
-">
-
-  <!-- Navigation -->
-  <div>
-    <a href="index.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Accueil</a>
-    <a href="parcours.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Parcours</a>
-    <a href="carte.html" style="margin-right:12px; color:#2a5db0; text-decoration:none;">Carte</a>
-    <a href="infos.html" style="color:#2a5db0; text-decoration:none;">Infos</a>
-  </div>
-
-  <!-- Email discret -->
-  <div>
-    <span>Recevoir les prochaines découvertes :</span>
-    <input type="email" placeholder="email"
-           style="padding:5px; margin-left:6px; width:140px; border:1px solid #ccc; border-radius:4px;">
-    <button style="padding:5px 8px; margin-left:4px; background:#a65c3a; color:white; border:none; border-radius:4px;">
-      OK
-    </button>
-  </div>
-
-  <!-- Mention -->
-  <div style="font-size:0.75rem; color:#777;">
-    Projet associatif • Gratuit
-  </div>
-
-</div>
+    <nav class="mobile-nav" aria-label="Navigation principale">
+      <a href="index.html" class="mobile-nav__item">Accueil</a>
+      <a href="parcours.html" class="mobile-nav__item">Parcours</a>
+      <a href="carte.html" class="mobile-nav__item is-active">Carte</a>
+      <a href="infos.html" class="mobile-nav__item">Infos</a>
+    </nav>
   </body>
 </html>
