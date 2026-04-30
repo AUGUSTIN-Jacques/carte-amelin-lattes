@@ -129,9 +129,11 @@
       .popup-card img {
         display: block;
         width: 100%;
-        max-height: 220px;
+        max-height: 196px;
         object-fit: contain;
-        margin: 0 0 2px;
+        margin: 0 0 1px;
+        border-radius: 8px;
+        background: rgba(245, 240, 232, 0.9);
       }
 
       .popup-card p {
@@ -148,6 +150,11 @@
         color: #0f5e78;
         font-weight: 700;
         text-decoration: none;
+      }
+
+      .popup-link--image {
+        display: inline-block;
+        margin-top: 1px;
       }
 
       .popup-link:hover {
@@ -412,99 +419,6 @@
       crossorigin=""
     ></script>
     <script>
-      const oeuvres = [
-        {
-          id: 52,
-          titre: "Bords du Lez, près la 3e écluse, Lattes",
-          description: "Vue des abords du Lez près de la troisième écluse de Lattes.",
-          latitude: 43.555464,
-          longitude: 3.897237,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485976z/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177801",
-        },
-        {
-          id: 55,
-          titre: "Près la 3e écluse sur le Lez, Lattes",
-          description: "Vue du Lez au XIXe siècle dans le secteur de la troisième écluse.",
-          latitude: 43.561222,
-          longitude: 3.892101,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485977d/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917781c",
-        },
-        {
-          id: 57,
-          titre: "A la 3e écluse, Lattes",
-          description: "Vue de la troisième écluse dans le paysage fluvial de Lattes.",
-          latitude: 43.561615,
-          longitude: 3.89455,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485978v/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917782q",
-        },
-        {
-          id: 62,
-          titre: "A la 3e écluse, Lattes",
-          description: "Autre vue du secteur de la troisième écluse à Lattes.",
-          latitude: 43.56169,
-          longitude: 3.894516,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b104859799/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177832",
-        },
-        {
-          id: 64,
-          titre: "A la troisième écluse, Lattes",
-          description: "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
-          latitude: 43.561868,
-          longitude: 3.89473,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485980p/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917784d",
-        },
-        {
-          id: 65,
-          titre: "2e écluse sur le Lez, Lattes",
-          description: "Vue d'écluse et de berge dans le paysage fluvial de Lattes.",
-          latitude: 43.56323,
-          longitude: 3.895824,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10486384j/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917794q",
-        },
-        {
-          id: 67,
-          titre: "A la troisième écluse, Lattes",
-          description: "Scène du Lez au XIXe siècle autour de la troisième écluse.",
-          latitude: 43.5629,
-          longitude: 3.89573,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b104859814/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917785r",
-        },
-        {
-          id: 70,
-          titre: "A la troisième écluse, Lattes",
-          description: "Scène du Lez au XIXe siècle autour des circulations d'eau.",
-          latitude: 43.561964,
-          longitude: 3.895391,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485982k/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb459177863",
-        },
-        {
-          id: 74,
-          titre: "A la troisième écluse, Lattes",
-          description: "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
-          latitude: 43.562118,
-          longitude: 3.894735,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10486377g/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917787f",
-        },
-        {
-          id: 80,
-          titre: "A la troisième écluse, Lattes",
-          description: "Paysage du Lez et de ses ouvrages hydrauliques près de Lattes.",
-          latitude: 43.562964,
-          longitude: 3.894616,
-          image: "https://gallica.bnf.fr/ark:/12148/btv1b10485975h/f1.highres",
-          lien_oeuvre: "https://catalogue.bnf.fr/ark:/12148/cb45917779t",
-        },
-      ];
-
       const map = L.map("map", {
         zoomControl: true,
       });
@@ -514,7 +428,6 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map);
 
-      const bounds = L.latLngBounds([]);
       let userMarker = null;
       let userCircle = null;
       let isFollowingUser = false;
@@ -565,6 +478,29 @@
       const locateControl = new LocateControl();
       map.addControl(locateControl);
 
+      function buildPopupContent(oeuvre) {
+        return `
+          <div class="popup-card">
+            <span class="popup-id">ID ${oeuvre.id}</span>
+            <h2 class="popup-title">${oeuvre.titre}</h2>
+            <a href="${oeuvre.image_hd}" target="_blank" rel="noopener noreferrer">
+              <img
+                src="${oeuvre.image_lowres}"
+                alt="${oeuvre.titre}"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+                width="320"
+                height="220"
+              >
+            </a>
+            <p><a class="popup-link popup-link--image" href="${oeuvre.image_hd}" target="_blank" rel="noopener noreferrer">Ouvrir l’image en grand</a></p>
+            <p class="popup-description"><em>${oeuvre.description}</em></p>
+            <p><a class="popup-link" href="${oeuvre.notice}" target="_blank" rel="noopener noreferrer">Voir la notice BnF</a></p>
+          </div>
+        `;
+      }
+
       function setLocateStatus(message) {
         if (locateControl._status) {
           locateControl._status.textContent = message;
@@ -586,33 +522,53 @@
         locateControl._wrapper.classList.toggle("is-popup-open", open);
       }
 
-      for (const oeuvre of oeuvres) {
-        const marker = L.marker([oeuvre.latitude, oeuvre.longitude], {
-          icon: L.divIcon({
-            className: "",
-            html: `<div class="custom-marker">${oeuvre.id}</div>`,
-            iconSize: [34, 34],
-            iconAnchor: [17, 17],
-            popupAnchor: [0, -12],
-          }),
-        });
+      function renderOeuvres(oeuvres) {
+        const bounds = L.latLngBounds([]);
 
-        marker.bindPopup(`
-          <div class="popup-card">
-            <span class="popup-id">ID ${oeuvre.id}</span>
-            <h2 class="popup-title">${oeuvre.titre}</h2>
-            <a href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">
-              <img src="${oeuvre.image}" alt="${oeuvre.titre}">
-            </a>
-            <p><a class="popup-link" href="${oeuvre.image}" target="_blank" rel="noopener noreferrer">Ouvrir l’image en grand</a></p>
-            <p class="popup-description"><em>${oeuvre.description}</em></p>
-            <p><a class="popup-link" href="${oeuvre.lien_oeuvre}" target="_blank" rel="noopener noreferrer">Voir la notice BnF</a></p>
-          </div>
-        `);
+        for (const oeuvre of oeuvres) {
+          const marker = L.marker([oeuvre.lat, oeuvre.lng], {
+            icon: L.divIcon({
+              className: "",
+              html: `<div class="custom-marker">${oeuvre.id}</div>`,
+              iconSize: [34, 34],
+              iconAnchor: [17, 17],
+              popupAnchor: [0, -12],
+            }),
+          });
 
-        marker.addTo(map);
-        bounds.extend([oeuvre.latitude, oeuvre.longitude]);
+          marker.bindPopup(() => buildPopupContent(oeuvre), {
+            maxWidth: 260,
+            autoPanPaddingTopLeft: [18, 18],
+            autoPanPaddingBottomRight: [18, 110],
+          });
+
+          marker.addTo(map);
+          bounds.extend([oeuvre.lat, oeuvre.lng]);
+        }
+
+        if (oeuvres.length === 1) {
+          map.setView([oeuvres[0].lat, oeuvres[0].lng], 14);
+        } else if (oeuvres.length > 1) {
+          map.fitBounds(bounds.pad(0.18));
+        }
       }
+
+      async function loadOeuvres() {
+        try {
+          const response = await fetch("data.json");
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const oeuvres = await response.json();
+          renderOeuvres(oeuvres);
+        } catch (error) {
+          console.error("Impossible de charger data.json", error);
+          setLocateStatus("Impossible de charger les points de la carte.");
+        }
+      }
+
+      loadOeuvres();
 
       map.on("locationfound", (event) => {
         if (!userMarker) {
@@ -660,11 +616,6 @@
         setPopupOpenState(false);
       });
 
-      if (oeuvres.length === 1) {
-        map.setView([oeuvres[0].latitude, oeuvres[0].longitude], 14);
-      } else {
-        map.fitBounds(bounds.pad(0.18));
-      }
     </script>
     <nav class="mobile-nav" aria-label="Navigation principale">
       <a href="index.html" class="mobile-nav__item">Accueil</a>
