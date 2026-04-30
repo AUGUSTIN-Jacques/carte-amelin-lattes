@@ -45,21 +45,31 @@
       text-align: center;
     }
 
-    .hero-logo img {
-      display: inline-block;
-      width: min(74vw, 240px);
-      min-width: 156px;
-      height: auto;
+    .hero-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 6px;
     }
 
+    .hero-logo,
     .hero-signature {
-      margin-top: -18px;
+      margin: 0;
+      flex: 0 1 auto;
+    }
+
+    .hero-logo img {
+      display: inline-block;
+      width: min(38vw, 132px);
+      min-width: 94px;
+      height: auto;
     }
 
     .hero-signature img {
       display: inline-block;
-      width: min(84vw, 290px);
-      min-width: 178px;
+      width: min(44vw, 172px);
+      min-width: 110px;
       height: auto;
       opacity: 0.96;
     }
@@ -240,15 +250,11 @@
       }
 
       .hero-logo img {
-        width: min(44vw, 330px);
+        width: min(26vw, 220px);
       }
 
       .hero-signature img {
-        width: min(52vw, 480px);
-      }
-
-      .hero-signature {
-        margin-top: -26px;
+        width: min(30vw, 290px);
       }
 
       .intro-box {
@@ -286,14 +292,22 @@
 <body>
   <main class="page-wrap">
     <section class="hero-card">
-      <div class="hero-logo">
-        <a href="index.html" style="text-decoration:none;">
-          <img src="logo-cetaitici.png" alt="C’était ici !">
-        </a>
-      </div>
+      <div class="hero-logos">
+        <div class="hero-logo">
+          <a href="index.html" style="text-decoration:none;">
+            <picture>
+              <source srcset="logo-cetaitici.webp" type="image/webp">
+              <img src="logo-cetaitici.png" alt="C’était ici !">
+            </picture>
+          </a>
+        </div>
 
-      <div class="hero-signature">
-        <img src="logo-histoire.png" alt="Histoire et Patrimoine">
+        <div class="hero-signature">
+          <picture>
+            <source srcset="logo-histoire.webp" type="image/webp">
+            <img src="logo-histoire.png" alt="Histoire et Patrimoine">
+          </picture>
+        </div>
       </div>
 
       <div class="intro-box">
