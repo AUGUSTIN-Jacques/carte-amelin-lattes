@@ -11,6 +11,10 @@
       crossorigin=""
     />
     <style>
+      @view-transition {
+        navigation: auto;
+      }
+
       :root {
         --bg: #f5f0e8;
         --panel: rgba(255, 251, 245, 0.94);
@@ -265,6 +269,42 @@
         color: var(--nav-active);
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        @view-transition {
+          navigation: none;
+        }
+      }
+
+      ::view-transition-old(root) {
+        animation: zoom-out 0.25s ease-in;
+      }
+
+      ::view-transition-new(root) {
+        animation: zoom-in 0.35s ease-out;
+      }
+
+      @keyframes zoom-in {
+        from {
+          transform: scale(0.92);
+          opacity: 0.82;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes zoom-out {
+        from {
+          transform: scale(1);
+          opacity: 1;
+        }
+        to {
+          transform: scale(0.985);
+          opacity: 0.78;
+        }
+      }
+
       .leaflet-bottom {
         bottom: calc(78px + env(safe-area-inset-bottom));
       }
@@ -394,8 +434,6 @@
           <p style="margin-top:15px;">
             <a
               href="infos.html"
-              target="_blank"
-              rel="noopener noreferrer"
               style="color:#2a5db0; text-decoration:underline;"
             >
               Informations générales / sources / droits

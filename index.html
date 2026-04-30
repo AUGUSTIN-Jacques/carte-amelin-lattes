@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>cetaitici</title>
   <style>
+    @view-transition {
+      navigation: auto;
+    }
+
     :root {
       --bg-top: #f7f0e3;
       --bg-bottom: #eadfc8;
@@ -145,6 +149,42 @@
 
     .cta-btn:hover {
       background: var(--accent-dark);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: zoom-out 0.25s ease-in;
+    }
+
+    ::view-transition-new(root) {
+      animation: zoom-in 0.35s ease-out;
+    }
+
+    @keyframes zoom-in {
+      from {
+        transform: scale(0.92);
+        opacity: 0.82;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes zoom-out {
+      from {
+        transform: scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: scale(0.985);
+        opacity: 0.78;
+      }
     }
 
     .cta-note {

@@ -6,6 +6,10 @@
   <title>Informations – cetaitici</title>
   <script data-goatcounter="https://cetaitici.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <style>
+    @view-transition {
+      navigation: auto;
+    }
+
     :root {
       --bg: #f4ecdf;
       --card: rgba(255, 251, 246, 0.88);
@@ -142,6 +146,42 @@
     .mobile-nav__item.is-active {
       background: rgba(255, 255, 255, 0.12);
       color: var(--nav-active);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: zoom-out 0.25s ease-in;
+    }
+
+    ::view-transition-new(root) {
+      animation: zoom-in 0.35s ease-out;
+    }
+
+    @keyframes zoom-in {
+      from {
+        transform: scale(0.92);
+        opacity: 0.82;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes zoom-out {
+      from {
+        transform: scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: scale(0.985);
+        opacity: 0.78;
+      }
     }
 
     @media (min-width: 760px) {
