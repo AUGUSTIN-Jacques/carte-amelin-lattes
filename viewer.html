@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visionneuse – cetaitici</title>
+  <link rel="dns-prefetch" href="//catalogue.bnf.fr">
+  <link rel="preconnect" href="https://catalogue.bnf.fr">
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+
+    :root {
+      --bg: #f6efe4;
+      --paper: rgba(255, 251, 246, 0.92);
+      --ink: #2b211a;
+      --muted: #6a5d53;
+      --accent: #a65c3a;
+      --border: rgba(73, 43, 23, 0.12);
+      --nav-bg: rgba(43, 29, 20, 0.94);
+      --nav-text: rgba(255, 245, 236, 0.72);
+      --nav-active: #fffaf3;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(166, 92, 58, 0.10), transparent 28%),
+        linear-gradient(180deg, #fbf6ef 0%, var(--bg) 100%);
+    }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 16px 14px 88px;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-bottom: 14px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .viewer-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      box-shadow: 0 18px 36px rgba(78, 50, 31, 0.08);
+    }
+
+    .viewer-id {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f1dfd3;
+      color: #7b3316;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(1.5rem, 5.4vw, 2.4rem);
+      line-height: 1.05;
+    }
+
+    .viewer-stage {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: rgba(235, 224, 210, 0.72);
+      min-height: 240px;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .viewer-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 72vh;
+      object-fit: contain;
+      transform-origin: center center;
+      transition: opacity 220ms ease, transform 180ms ease;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+    }
+
+    .viewer-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .viewer-stage.is-zoomed .viewer-image {
+      transition: opacity 220ms ease;
+    }
+
+    .viewer-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .viewer-tool {
+      min-width: 44px;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+    }
+
+    .viewer-tool[disabled] {
+      opacity: 0.45;
+    }
+
+    .viewer-status {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.35;
+    }
+
+    .viewer-status.is-ready {
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .viewer-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .viewer-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .viewer-btn--secondary {
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .viewer-note {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.6);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .viewer-meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .viewer-empty {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--paper);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      left: 10px;
+      right: 10px;
+      bottom: max(10px, env(safe-area-inset-bottom));
+      z-index: 1000;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 6px;
+      border-radius: 16px;
+      background: var(--nav-bg);
+      box-shadow: 0 18px 36px rgba(18, 12, 8, 0.24);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      padding: 6px 4px;
+      border-radius: 10px;
+      color: var(--nav-text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      @view-transition {
+        navigation: none;
+      }
+
+      .viewer-image,
+      .viewer-status.is-ready {
+        transition: none;
+      }
+
+      .viewer-stage.is-zoomed .viewer-image {
+        transition: none;
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: zoom-out 0.25s ease-in;
+    }
+
+    ::view-transition-new(root) {
+      animation: zoom-in 0.35s ease-out;
+    }
+
+    @keyframes zoom-in {
+      from {
+        transform: scale(0.92);
+        opacity: 0.82;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes zoom-out {
+      from {
+        transform: scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: scale(0.985);
+        opacity: 0.78;
+      }
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding: 28px 24px 88px;
+      }
+
+      .viewer-card {
+        padding: 22px;
+      }
+
+      .viewer-actions {
+        grid-template-columns: repeat(2, max-content);
+        align-items: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <a href="carte.html" class="top-link">← Retour à la carte</a>
+
+    <section class="viewer-card" id="viewerCard" hidden>
+      <span class="viewer-id" id="viewerId"></span>
+      <h1 id="viewerTitle"></h1>
+
+      <div class="viewer-stage">
+        <img id="viewerImage" class="viewer-image" alt="">
+      </div>
+
+      <div class="viewer-tools" aria-label="Outils de zoom">
+        <button type="button" class="viewer-tool" id="zoomOutBtn">−</button>
+        <button type="button" class="viewer-tool" id="zoomInBtn">+</button>
+        <button type="button" class="viewer-tool" id="zoomResetBtn">Réinitialiser</button>
+      </div>
+
+      <p class="viewer-status" id="viewerStatus">Chargement de l’image haute définition…</p>
+
+      <div class="viewer-actions">
+        <div class="viewer-note">Vous voyez l’image zoomable.</div>
+        <a id="viewerNotice" class="viewer-btn viewer-btn--secondary" href="#">Voir la notice BnF</a>
+      </div>
+
+      <p class="viewer-meta">
+        Pincez avec deux doigts, double-tapez ou utilisez les boutons pour explorer les détails.
+      </p>
+    </section>
+
+    <section class="viewer-empty" id="viewerEmpty" hidden>
+      Impossible d’afficher cette image. Les paramètres du viewer sont incomplets.
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Navigation principale">
+    <a href="index.html" class="mobile-nav__item">Accueil</a>
+    <a href="parcours.html" class="mobile-nav__item">Parcours</a>
+    <a href="carte.html" class="mobile-nav__item">Carte</a>
+    <a href="infos.html" class="mobile-nav__item">Infos</a>
+  </nav>
+
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const title = params.get("titre");
+      const lowres = params.get("lowres");
+      const hd = params.get("hd");
+      const notice = params.get("notice");
+      const id = params.get("id");
+
+      const viewerCard = document.getElementById("viewerCard");
+      const viewerEmpty = document.getElementById("viewerEmpty");
+      const viewerId = document.getElementById("viewerId");
+      const viewerTitle = document.getElementById("viewerTitle");
+      const viewerStage = document.querySelector(".viewer-stage");
+      const viewerImage = document.getElementById("viewerImage");
+      const viewerStatus = document.getElementById("viewerStatus");
+      const viewerNotice = document.getElementById("viewerNotice");
+      const zoomInBtn = document.getElementById("zoomInBtn");
+      const zoomOutBtn = document.getElementById("zoomOutBtn");
+      const zoomResetBtn = document.getElementById("zoomResetBtn");
+      let noticeWarmed = false;
+
+      let scale = 1;
+      let translateX = 0;
+      let translateY = 0;
+      let pointerActive = false;
+      let startX = 0;
+      let startY = 0;
+      let originX = 0;
+      let originY = 0;
+      let pinchActive = false;
+      let pinchStartDistance = 0;
+      let pinchStartScale = 1;
+      const activePointers = new Map();
+      const minScale = 1;
+      const maxScale = 6;
+
+      if (!title || !lowres || !hd || !notice || !id) {
+        viewerEmpty.hidden = false;
+        return;
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function warmNoticeLink() {
+        if (noticeWarmed || !notice) {
+          return;
+        }
+        noticeWarmed = true;
+        fetch(notice, {
+          mode: "no-cors",
+          method: "GET",
+          credentials: "omit",
+          cache: "force-cache",
+        }).catch(() => {
+          noticeWarmed = false;
+        });
+      }
+
+      function updateZoomUi() {
+        viewerStage.classList.toggle("is-zoomed", scale > 1.001);
+        zoomOutBtn.disabled = scale <= minScale;
+        zoomResetBtn.disabled = scale <= minScale && Math.abs(translateX) < 1 && Math.abs(translateY) < 1;
+      }
+
+      function applyTransform() {
+        const maxX = viewerStage.clientWidth * (scale - 1) * 0.5;
+        const maxY = viewerStage.clientHeight * (scale - 1) * 0.5;
+        translateX = clamp(translateX, -maxX, maxX);
+        translateY = clamp(translateY, -maxY, maxY);
+        viewerImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        updateZoomUi();
+      }
+
+      function setScale(nextScale, fromCenter = true) {
+        const clamped = clamp(nextScale, minScale, maxScale);
+        if (clamped === minScale) {
+          translateX = 0;
+          translateY = 0;
+        } else if (fromCenter && scale === minScale) {
+          translateX = 0;
+          translateY = 0;
+        }
+        scale = clamped;
+        applyTransform();
+      }
+
+      function pointerDistance() {
+        const points = Array.from(activePointers.values());
+        if (points.length < 2) {
+          return 0;
+        }
+        const [a, b] = points;
+        return Math.hypot(a.x - b.x, a.y - b.y);
+      }
+
+      function startDrag(clientX, clientY) {
+        if (scale <= 1.001) {
+          return;
+        }
+        pointerActive = true;
+        startX = clientX;
+        startY = clientY;
+        originX = translateX;
+        originY = translateY;
+        viewerStage.classList.add("is-dragging");
+      }
+
+      function moveDrag(clientX, clientY) {
+        if (!pointerActive) {
+          return;
+        }
+        translateX = originX + (clientX - startX);
+        translateY = originY + (clientY - startY);
+        applyTransform();
+      }
+
+      function endDrag() {
+        pointerActive = false;
+        viewerStage.classList.remove("is-dragging");
+      }
+
+      viewerCard.hidden = false;
+      document.title = `${title} – Visionneuse`;
+      viewerId.textContent = `ID ${id}`;
+      viewerTitle.textContent = title;
+      viewerImage.src = lowres;
+      viewerImage.alt = title;
+      viewerNotice.href = notice;
+      warmNoticeLink();
+
+      viewerNotice.addEventListener("pointerdown", warmNoticeLink, { once: true });
+      viewerNotice.addEventListener("touchstart", warmNoticeLink, { once: true, passive: true });
+      viewerNotice.addEventListener("mouseenter", warmNoticeLink, { once: true });
+      applyTransform();
+
+      zoomInBtn.addEventListener("click", () => {
+        setScale(scale + 0.75);
+      });
+
+      zoomOutBtn.addEventListener("click", () => {
+        setScale(scale - 0.75);
+      });
+
+      zoomResetBtn.addEventListener("click", () => {
+        setScale(1);
+      });
+
+      viewerStage.addEventListener("dblclick", () => {
+        if (scale > 1.001) {
+          setScale(1);
+        } else {
+          setScale(3.2);
+        }
+      });
+
+      viewerStage.addEventListener("pointerdown", (event) => {
+        activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        viewerStage.setPointerCapture(event.pointerId);
+
+        if (activePointers.size === 2) {
+          pinchActive = true;
+          pointerActive = false;
+          viewerStage.classList.remove("is-dragging");
+          pinchStartDistance = pointerDistance();
+          pinchStartScale = scale;
+          return;
+        }
+
+        if (!pinchActive) {
+          startDrag(event.clientX, event.clientY);
+        }
+      });
+
+      window.addEventListener("pointermove", (event) => {
+        if (activePointers.has(event.pointerId)) {
+          activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+        }
+
+        if (pinchActive && activePointers.size >= 2) {
+          const nextDistance = pointerDistance();
+          if (pinchStartDistance > 0 && nextDistance > 0) {
+            setScale(pinchStartScale * (nextDistance / pinchStartDistance), false);
+          }
+          return;
+        }
+
+        moveDrag(event.clientX, event.clientY);
+      });
+
+      function releasePointer(event) {
+        activePointers.delete(event.pointerId);
+
+        if (pinchActive && activePointers.size < 2) {
+          pinchActive = false;
+          const remaining = Array.from(activePointers.values())[0];
+          if (remaining && scale > 1.001) {
+            startDrag(remaining.x, remaining.y);
+            originX = translateX;
+            originY = translateY;
+          } else {
+            endDrag();
+          }
+        } else {
+          endDrag();
+        }
+      }
+
+      window.addEventListener("pointerup", releasePointer);
+      window.addEventListener("pointercancel", releasePointer);
+
+      viewerStage.addEventListener("wheel", (event) => {
+        event.preventDefault();
+        const delta = event.deltaY > 0 ? -0.35 : 0.35;
+        setScale(scale + delta, false);
+      }, { passive: false });
+
+      const highResImage = new Image();
+      highResImage.decoding = "async";
+      highResImage.onload = () => {
+        viewerImage.style.opacity = "0.42";
+        window.setTimeout(() => {
+          viewerImage.src = hd;
+          viewerImage.onload = () => {
+            viewerImage.style.opacity = "1";
+          };
+          viewerStatus.classList.add("is-ready");
+          window.setTimeout(() => {
+            viewerStatus.textContent = "Image haute définition chargée.";
+          }, 180);
+        }, 110);
+      };
+
+      highResImage.onerror = () => {
+        viewerStatus.textContent = "La miniature reste affichée. L’image haute définition n’a pas pu être chargée pour le moment.";
+      };
+
+      highResImage.src = hd;
+    })();
+  </script>
+</body>
+</html>

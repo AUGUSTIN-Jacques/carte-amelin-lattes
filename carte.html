@@ -510,12 +510,26 @@
       const locateControl = new LocateControl();
       map.addControl(locateControl);
 
+      function buildViewerUrl(oeuvre) {
+        const params = new URLSearchParams({
+          id: String(oeuvre.id),
+          titre: oeuvre.titre,
+          lowres: oeuvre.image_lowres,
+          hd: oeuvre.image_hd,
+          notice: oeuvre.notice,
+        });
+
+        return `viewer.html?${params.toString()}`;
+      }
+
       function buildPopupContent(oeuvre) {
+        const viewerUrl = buildViewerUrl(oeuvre);
+
         return `
           <div class="popup-card">
             <span class="popup-id">ID ${oeuvre.id}</span>
             <h2 class="popup-title">${oeuvre.titre}</h2>
-            <a href="${oeuvre.image_hd}" target="_blank" rel="noopener noreferrer">
+            <a href="${viewerUrl}">
               <img
                 src="${oeuvre.image_lowres}"
                 alt="${oeuvre.titre}"
@@ -526,7 +540,7 @@
                 height="220"
               >
             </a>
-            <p><a class="popup-link popup-link--image" href="${oeuvre.image_hd}" target="_blank" rel="noopener noreferrer">Ouvrir l’image en grand</a></p>
+            <p><a class="popup-link popup-link--image" href="${viewerUrl}">Ouvrir l’image en grand</a></p>
             <p class="popup-description"><em>${oeuvre.description}</em></p>
             <p><a class="popup-link" href="${oeuvre.notice}" target="_blank" rel="noopener noreferrer">Voir la notice BnF</a></p>
           </div>
