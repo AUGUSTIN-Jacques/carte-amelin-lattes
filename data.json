@@ -28,5 +28,75 @@
     "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10485978v/f1/full/320,/0/native.jpg",
     "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10485978v/f1.highres",
     "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917782q"
+  },
+  {
+    "id": 62,
+    "titre": "A la 3e écluse, Lattes",
+    "lat": 43.56169,
+    "lng": 3.894516,
+    "description": "Autre vue du secteur de la troisième écluse à Lattes.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b104859799/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b104859799/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb459177832"
+  },
+  {
+    "id": 64,
+    "titre": "A la troisième écluse, Lattes",
+    "lat": 43.561868,
+    "lng": 3.89473,
+    "description": "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10485980p/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10485980p/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917784d"
+  },
+  {
+    "id": 65,
+    "titre": "2e écluse sur le Lez, Lattes",
+    "lat": 43.56323,
+    "lng": 3.895824,
+    "description": "Vue d'écluse et de berge dans le paysage fluvial de Lattes.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10486384j/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10486384j/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917794q"
+  },
+  {
+    "id": 67,
+    "titre": "A la troisième écluse, Lattes",
+    "lat": 43.5629,
+    "lng": 3.89573,
+    "description": "Scène du Lez au XIXe siècle autour de la troisième écluse.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b104859814/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b104859814/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917785r"
+  },
+  {
+    "id": 70,
+    "titre": "A la troisième écluse, Lattes",
+    "lat": 43.561964,
+    "lng": 3.895391,
+    "description": "Scène du Lez au XIXe siècle autour des circulations d'eau.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10485982k/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10485982k/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb459177863"
+  },
+  {
+    "id": 74,
+    "titre": "A la troisième écluse, Lattes",
+    "lat": 43.562118,
+    "lng": 3.894735,
+    "description": "Vue des abords de la troisième écluse dans un secteur fluvial actif.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10486377g/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10486377g/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917787f"
+  },
+  {
+    "id": 80,
+    "titre": "A la troisième écluse, Lattes",
+    "lat": 43.562964,
+    "lng": 3.894616,
+    "description": "Paysage du Lez et de ses ouvrages hydrauliques près de Lattes.",
+    "image_lowres": "https://gallica.bnf.fr/iiif/ark:/12148/btv1b10485975h/f1/full/320,/0/native.jpg",
+    "image_hd": "https://gallica.bnf.fr/ark:/12148/btv1b10485975h/f1.highres",
+    "notice": "https://catalogue.bnf.fr/ark:/12148/cb45917779t"
   }
 ]
